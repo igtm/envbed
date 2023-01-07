@@ -57,3 +57,9 @@ cat target.html | envbed -e .env -o out.html
 ```shell
 cat target.html | envbed -e .env > out.html
 ```
+
+- replace target.html with out.html using OS environment variables
+
+```shell
+envbed -f target.html -o out.html
+```
