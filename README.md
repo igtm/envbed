@@ -2,8 +2,6 @@
 
 a faster, simpler text replacer written in Rust (alternative `envsubst`)
 
-named from `env` + `embed`
-
 <p align="center">
   <img src="./docs/envbed.png">
 </p>
