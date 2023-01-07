@@ -1,0 +1,13 @@
+[package]
+name = "envbed"
+version = "0.0.1"
+edition = "2021"
+authors = ["igtm"]
+description = "a fast, simple file text replacer with environment variables written in Rust (alternative `envsubst`)"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+atty = "0.2.14"
+clap = { version = "4.0.32", features = ["derive"] }
