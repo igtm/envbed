@@ -1,6 +1,6 @@
 # envbed
 
-a fast, simple file text replacer with environment variables written in Rust (alternative `envsubst`)
+a faster, simpler text replacer written in Rust (alternative `envsubst`)
 
 named from `env` + `embed`
 
@@ -75,3 +75,30 @@ envbed -f target.html -w
 ```shell
 envbed -f target.html -w --template-syntax-double-braces
 ```
+
+# Benchmark (envsubst vs envbed)
+
+| cli        | Command                    | Mean [s]           | Min [s]  | Max [s]  | diff                  |
+| :--------- | :------------------------- | :----------------- | :------- | :------- | :-------------------- |
+| envsubst   | `envsubst < a.txt > b.txt` | 57.529 s ± 0.623 s | 56.758 s | 58.617 s | 1                     |
+| **envbed** | `envbed -f a.txt -o b.txt` | 21.787 s ± 0.243 s | 21.412 s | 22.159 s | **2.64 times faster** |
+
+<details>
+<summary>detail terminal log</summary>
+
+```shell
+$ hyperfine --warmup 3 'envsubst < a.txt > b.txt'
+Benchmark 1: envsubst < a.txt > b.txt
+  Time (mean ± σ):     57.529 s ±  0.623 s    [User: 51.381 s, System: 5.908 s]
+  Range (min … max):   56.758 s … 58.617 s    10 runs
+
+
+$ hyperfine --warmup 3 'envbed -f a.txt -o b.txt'
+Benchmark 1: envbed -f a.txt -o b.txt
+  Time (mean ± σ):     21.787 s ±  0.243 s    [User: 16.008 s, System: 5.510 s]
+  Range (min … max):   21.412 s … 22.159 s    10 runs
+```
+
+</details>
+
+a.txt: `5.7GB`
