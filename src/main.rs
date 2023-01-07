@@ -1,10 +1,17 @@
 use atty::Stream;
 use clap::Parser;
+use envbed::replace_dollar_braces::replace_dollar_braces_with_hashmap;
+use envbed::replace_double_braces::replace_double_braces_with_hashmap;
 use std::io::{self};
 use std::{
     env,
     io::{Read, Write},
 };
+mod model;
+mod replace_dollar_braces;
+mod replace_double_braces;
+use rustc_hash::FxHasher;
+use std::{collections::HashMap, hash::BuildHasherDefault};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -34,12 +41,6 @@ struct Args {
     out: String,
 }
 
-#[derive(Debug)]
-pub struct EnvVar {
-    key: String,
-    val: String,
-}
-
 fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
@@ -57,23 +58,20 @@ fn main() -> std::io::Result<()> {
         }
     }
     // 1.2 Get Env Vars
-    let mut envvars: Vec<EnvVar> = vec![];
+    let mut envvars: HashMap<String, String, BuildHasherDefault<FxHasher>> = HashMap::default();
     if !args.env_from_file.is_empty() {
         // get env from file
         let mut envfile = String::new();
         let mut fe = std::fs::File::open(args.env_from_file)?;
         fe.read_to_string(&mut envfile)?;
         // parse text
-        for t in envfile.lines().by_ref() {
+        for t in envfile.lines() {
             let kv: Vec<&str> = t.split('=').collect();
             if kv.len() == 2 {
                 if !args.env_prefix.is_empty() && !kv[0].to_owned().starts_with(&args.env_prefix) {
                     continue;
                 }
-                envvars.push(EnvVar {
-                    key: kv[0].to_owned(),
-                    val: kv[1].to_owned(),
-                })
+                envvars.insert(kv[0].to_owned(), kv[1].to_owned());
             }
         }
     } else {
@@ -82,19 +80,15 @@ fn main() -> std::io::Result<()> {
             if !args.env_prefix.is_empty() && !key.starts_with(&args.env_prefix) {
                 continue;
             }
-            envvars.push(EnvVar { key, val: value })
+            envvars.insert(key, value);
         }
     }
 
     // 2. Replace
     if args.template_syntax_double_braces {
-        for envvar in envvars {
-            target = target.replace(&format!("{{{{{}}}}}", &envvar.key), &envvar.val)
-        }
+        target = replace_double_braces_with_hashmap(&envvars, &target)
     } else {
-        for envvar in envvars {
-            target = target.replace(&format!("${{{}}}", &envvar.key), &envvar.val)
-        }
+        target = replace_dollar_braces_with_hashmap(&envvars, &target)
     }
 
     // 3. Output
