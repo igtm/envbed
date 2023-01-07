@@ -40,26 +40,38 @@ Options:
 
 # Example
 
-- replace target.html with out.html using .env
+- replace `${FOO}` in target.html with values in .env and write in out.html
 
 ```shell
 envbed -f target.html -e .env -o out.html
 ```
 
-- replace piped stdin with out.html using .env
+- replace `${FOO}` in piped stdin with values in .env and write in out.html
 
 ```shell
 cat target.html | envbed -e .env -o out.html
 ```
 
-- replace piped stdin with out.html using .env to stdout (using redirect)
+- replace `${FOO}` in piped stdin with values in .env and write in stdout (using redirect)
 
 ```shell
 cat target.html | envbed -e .env > out.html
 ```
 
-- replace target.html with out.html using OS environment variables
+- replace `${FOO}` in target.html with OS environment variables and write in out.html
 
 ```shell
 envbed -f target.html -o out.html
+```
+
+- replace `${FOO}` in target.html with OS environment variables and override target.html
+
+```shell
+envbed -f target.html -w
+```
+
+- replace `{{FOO}}` in target.html with OS environment variables and override target.html
+
+```shell
+envbed -f target.html -w --template-syntax-double-braces
 ```
