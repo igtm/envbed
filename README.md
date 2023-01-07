@@ -4,7 +4,9 @@ a fast, simple file text replacer with environment variables written in Rust (al
 
 named from `env` + `embed`
 
-![image](./docs/envbed.png "image")
+<p align="center">
+  <img src="./docs/envbed.png">
+</p>
 
 # Installation
 
