@@ -104,7 +104,7 @@ mod tests {
             },
             EnvVar {
                 key: "KEY10".to_owned(),
-                val: "value10".to_owned(),
+                val: "val😛😹😹ue😹10".to_owned(),
             },
         ];
         let target =
@@ -114,7 +114,7 @@ mod tests {
       2fwa${KEY4}hfasd${KEY4}fnadnfa0${KEY4}2fwah${KEY4}fasdf${KEY4}na${KEY4}${KEY4}dnfa0
       2fwa${KEY5}hfasd${KEY5}fnadnfa0${KEY5}2fwah${KEY5}fasdf${KEY5}na${KEY5}${KEY5}dnfa0
       2fwa${KEY6}hfasd${KEY6}fnadnfa0${KEY6}2fwah${KEY6}fasdf${KEY6}na${KEY6}${KEY6}dnfa0
-      2fwa${KEY7}hfasd${KEY7}fnadnfa0${KEY7}2fwah${KEY7}fasdf${KEY7}na${KEY7}${KEY7}dnfa0
+      2fwa${KEY7}hfasd${KEY7}fnad😹😹😹nfa0${KEY7}2fwah${KEY7}fasdf${KEY7}na${KEY7}${KEY7}dnfa0
       2fwa${KEY8}hfasd${KEY8}fnadnfa0${KEY8}2fwah${KEY8}fasdf${KEY8}na${KEY8}${KEY8}dnfa0
       2fwa${KEY9}hfasd${KEY9}fnadnfa0${KEY9}2fwah${KEY9}fasdf${KEY9}na${KEY9}${KEY9}dnfa0
       2fwah${KEY10}fasd${KEY10}fnadnfa0$${KEY10}2fwa${KEY10}hfasd${KEY10}fn${KEY10}${KEY10}adnfa";
@@ -125,10 +125,10 @@ mod tests {
       2fwavalue4hfasdvalue4fnadnfa0value42fwahvalue4fasdfvalue4navalue4value4dnfa0
       2fwavalue5hfasdvalue5fnadnfa0value52fwahvalue5fasdfvalue5navalue5value5dnfa0
       2fwavalue6hfasdvalue6fnadnfa0value62fwahvalue6fasdfvalue6navalue6value6dnfa0
-      2fwavalue7hfasdvalue7fnadnfa0value72fwahvalue7fasdfvalue7navalue7value7dnfa0
+      2fwavalue7hfasdvalue7fnad😹😹😹nfa0value72fwahvalue7fasdfvalue7navalue7value7dnfa0
       2fwavalue8hfasdvalue8fnadnfa0value82fwahvalue8fasdfvalue8navalue8value8dnfa0
       2fwavalue9hfasdvalue9fnadnfa0value92fwahvalue9fasdfvalue9navalue9value9dnfa0
-      2fwahvalue10fasdvalue10fnadnfa0$value102fwavalue10hfasdvalue10fnvalue10value10adnfa";
+      2fwahval😛😹😹ue😹10fasdval😛😹😹ue😹10fnadnfa0$val😛😹😹ue😹102fwaval😛😹😹ue😹10hfasdval😛😹😹ue😹10fnval😛😹😹ue😹10val😛😹😹ue😹10adnfa";
 
         let ret = replace_dollar_braces(&envvars, target.to_owned());
         assert_eq!(ret, expected);
@@ -146,29 +146,29 @@ mod tests {
         envvars.insert("KEY7".to_owned(), "value7".to_owned());
         envvars.insert("KEY8".to_owned(), "value8".to_owned());
         envvars.insert("KEY9".to_owned(), "value9".to_owned());
-        envvars.insert("KEY10".to_owned(), "value10".to_owned());
+        envvars.insert("KEY10".to_owned(), "val😛😹😹ue😹10".to_owned());
         let target =
-          "2fwa${KEY1}hfasd${KEY1}fnadnfa0${KEY1}2fwah${KEY1}fasdf${KEY1}na${KEY1}${KEY1}dnfa0
+            "2fwa${KEY1}hfasd${KEY1}fnadnfa0${KEY1}2fwah${KEY1}fasdf${KEY1}na${KEY1}${KEY1}dnfa0
       2fwa${KEY2}hfasd${KEY2}fnadnfa0${KEY2}2fwah${KEY2}fasdf${KEY2}na${KEY2}${KEY2}dnfa0
       2fwa${KEY3}hfasd${KEY3}fnadnfa0${KEY3}2fwah${KEY3}fasdf${KEY3}na${KEY3}${KEY3}dnfa0
       2fwa${KEY4}hfasd${KEY4}fnadnfa0${KEY4}2fwah${KEY4}fasdf${KEY4}na${KEY4}${KEY4}dnfa0
       2fwa${KEY5}hfasd${KEY5}fnadnfa0${KEY5}2fwah${KEY5}fasdf${KEY5}na${KEY5}${KEY5}dnfa0
-      2fwa${KEY6}hfasd${KEY6}fnadnfa0${KEY6}2fwah${KEY6}fasdf${KEY6}na${KEY6}${KEY6}dnfa0
-      2fwa${KEY7}hfasd${KEY7}fnadnfa0${KEY7}2fwah${KEY7}fasdf${KEY7}na${KEY7}${KEY7}dnfa0
+      2fwa${KEY6}hfasd${KEY6}fnadnfa0${KEY6}2fwah${KEY6}  fasdf${KEY6}na${KEY6}${KEY6}dnfa0
+      2fwa${KEY7}hfasd${KEY7}fnad😹😹😹nfa0${KEY7}2fwah${KEY7}fasdf薔薇薔薇${KEY7}na${KEY7}${KEY7}dnfa0
       2fwa${KEY8}hfasd${KEY8}fnadnfa0${KEY8}2fwah${KEY8}fasdf${KEY8}na${KEY8}${KEY8}dnfa0
-      2fwa${KEY9}hfasd${KEY9}fnadnfa0${KEY9}2fwah${KEY9}fasdf${KEY9}na${KEY9}${KEY9}dnfa0
-      2fwah${KEY10}fasd${KEY10}fnadnfa0${{$${KEY10}2fwa${KEY10}hfasd${KEY10}fn${KEY10}${KEY10}adnfa";
+      2fwa${KEY9}hfasd${KEY9}fnadnfa0${KEY9}2fwah${KE😹Y9}fasdf${KEY9}na${KEY9}${KEY9}dnfa0
+      2fwah${KEY10}fasd${KEY10}fnadnfa0$${KEY10}2fwa${KEY10}hfasd${KEY10}fn${KEY10}${KEY10}adnfa";
         let expected =
             "2fwavalue1hfasdvalue1fnadnfa0value12fwahvalue1fasdfvalue1navalue1value1dnfa0
       2fwavalue2hfasdvalue2fnadnfa0value22fwahvalue2fasdfvalue2navalue2value2dnfa0
       2fwavalue3hfasdvalue3fnadnfa0value32fwahvalue3fasdfvalue3navalue3value3dnfa0
       2fwavalue4hfasdvalue4fnadnfa0value42fwahvalue4fasdfvalue4navalue4value4dnfa0
       2fwavalue5hfasdvalue5fnadnfa0value52fwahvalue5fasdfvalue5navalue5value5dnfa0
-      2fwavalue6hfasdvalue6fnadnfa0value62fwahvalue6fasdfvalue6navalue6value6dnfa0
-      2fwavalue7hfasdvalue7fnadnfa0value72fwahvalue7fasdfvalue7navalue7value7dnfa0
+      2fwavalue6hfasdvalue6fnadnfa0value62fwahvalue6  fasdfvalue6navalue6value6dnfa0
+      2fwavalue7hfasdvalue7fnad😹😹😹nfa0value72fwahvalue7fasdf薔薇薔薇value7navalue7value7dnfa0
       2fwavalue8hfasdvalue8fnadnfa0value82fwahvalue8fasdfvalue8navalue8value8dnfa0
-      2fwavalue9hfasdvalue9fnadnfa0value92fwahvalue9fasdfvalue9navalue9value9dnfa0
-      2fwahvalue10fasdvalue10fnadnfa0${{$value102fwavalue10hfasdvalue10fnvalue10value10adnfa";
+      2fwavalue9hfasdvalue9fnadnfa0value92fwah${KE😹Y9}fasdfvalue9navalue9value9dnfa0
+      2fwahval😛😹😹ue😹10fasdval😛😹😹ue😹10fnadnfa0$val😛😹😹ue😹102fwaval😛😹😹ue😹10hfasdval😛😹😹ue😹10fnval😛😹😹ue😹10val😛😹😹ue😹10adnfa";
 
         let ret = replace_dollar_braces_with_hashmap(&envvars, target);
         assert_eq!(ret.to_owned(), expected.to_owned());
