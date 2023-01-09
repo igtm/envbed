@@ -1,8 +1,9 @@
 use atty::Stream;
 use clap::Parser;
-use envbed::replace_dollar_braces::replace_dollar_braces_with_hashmap;
+use envbed::replace_dollar_braces::{replace_dollar_braces_with_hashmap, replace_dollar_braces_with_hashmap_parallel};
 use envbed::replace_double_braces::replace_double_braces_with_hashmap;
 use std::io::{self};
+use std::sync::{Arc, Mutex};
 use std::{
     env,
     io::{Read, Write},
@@ -31,6 +32,10 @@ struct Args {
     /// uses {{FOO}} syntax instead of ${FOO} (avoid conflicts with OS default syntax)
     #[arg(long, default_value_t = false)]
     template_syntax_double_braces: bool,
+
+    /// parallel replacement (consider overhead of parallelism. this is for a huge file)
+    #[arg(long, default_value_t = false)]
+    parallel: bool,
 
     /// override a target file (--file)
     #[arg(short = 'w', long, default_value_t = false)]
@@ -88,7 +93,11 @@ fn main() -> std::io::Result<()> {
     if args.template_syntax_double_braces {
         target = replace_double_braces_with_hashmap(&envvars, &target)
     } else {
-        target = replace_dollar_braces_with_hashmap(&envvars, &target)
+        if args.parallel {
+          target = replace_dollar_braces_with_hashmap_parallel(&envvars, target.to_owned(), 24)
+        } else {
+          target = replace_dollar_braces_with_hashmap(&envvars, &target)
+        }
     }
 
     // 3. Output
