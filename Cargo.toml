@@ -1,6 +1,6 @@
 [package]
 name = "envbed"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 authors = ["igtm"]
 description = "a fast, simple file text replacer with environment variables written in Rust (alternative `envsubst`)"
